@@ -32,6 +32,15 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle
       - name: Make gradlew executable
         run: chmod +x gradlew
+      - name: Run PIT tests
+        run: ./gradlew pitest
+      - name: Validate PIT coverage
+        run: |
+          coverage=$(grep -oP 'Mutation score: \K[0-9]+' reports/jacocoHtml/index.html)
+          if (( $(echo "$coverage < 50" | bc -l) )); then
+            echo "Mutation score is below 50%. Failing the build.";
+            exit 1;
+          fi
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
