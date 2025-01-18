@@ -45,7 +45,7 @@ creada por Bancolombia llamado Scaffold
 ### 2.1. Elección de la DB  
 
 ### 2.2. Diagrama Entidad-Relación  
-![Diagrama Entidad-Relación](img.png) 
+![Diagrama Entidad-Relación](images/img.png) 
 
 ## Documentación Swagger
 
@@ -58,5 +58,5 @@ creada por Bancolombia llamado Scaffold
 ---
 
 ## 3. Diagrama de Flujo  
-![Diagrama de Flujo](img_1.png)  
+![Diagrama de Flujo](images/img_1.png)  
 
