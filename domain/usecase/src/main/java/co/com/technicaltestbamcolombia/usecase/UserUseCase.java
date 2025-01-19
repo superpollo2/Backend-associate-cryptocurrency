@@ -8,9 +8,5 @@ import reactor.core.publisher.Mono;
 @AllArgsConstructor
 public class UserUseCase {
 
-    private final UserGateway userGateway;
 
-    public Mono<UserDTO> find(String username) {
-        return userGateway.findByUsername(username);
-    }
 }

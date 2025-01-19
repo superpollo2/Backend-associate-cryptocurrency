@@ -5,4 +5,5 @@ import reactor.core.publisher.Mono;
 
 public interface UserGateway {
     Mono<UserDTO> findByUsername(String username);
+    Mono<Integer> findCountryByUserId(Integer userId);
 }

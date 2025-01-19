@@ -1,6 +1,5 @@
 server:
   port: 8080
-  address: 0.0.0.0
 spring:
   application:
     name: "associateCryptocurrency"
@@ -8,8 +7,8 @@ spring:
     add-properties: false
   main:
     web-application-type: "reactive"
-  webflux:
-    base-path: "/api/v1/cryptocoin/"
+    webflux:
+      base-path: "/api/v1/cryptocoin/"
 logging:
   level:
     root: "info"
