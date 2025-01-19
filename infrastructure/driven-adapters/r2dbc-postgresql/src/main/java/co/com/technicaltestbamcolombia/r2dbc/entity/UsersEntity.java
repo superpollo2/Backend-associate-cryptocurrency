@@ -12,7 +12,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @With
 @Builder(toBuilder = true)
 @Table("Users")
-public class Users {
+public class UsersEntity {
 
     @Id
     private Integer userId;

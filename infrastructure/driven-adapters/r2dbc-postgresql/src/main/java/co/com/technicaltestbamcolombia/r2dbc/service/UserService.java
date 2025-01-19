@@ -2,7 +2,7 @@ package co.com.technicaltestbamcolombia.r2dbc.service;
 
 import co.com.technicaltestbamcolombia.model.user.UserDTO;
 import co.com.technicaltestbamcolombia.model.user.gateways.UserGateway;
-import co.com.technicaltestbamcolombia.r2dbc.entity.Users;
+import co.com.technicaltestbamcolombia.r2dbc.entity.UsersEntity;
 import co.com.technicaltestbamcolombia.r2dbc.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
@@ -20,6 +20,6 @@ public class UserService implements UserGateway {
     @Override
     public Mono<Integer> findCountryByUserId(Integer userId) {
         return  userRepository.findByUserId(userId)
-                .map(Users::getCountryId);
+                .map(UsersEntity::getCountryId);
     }
 }
