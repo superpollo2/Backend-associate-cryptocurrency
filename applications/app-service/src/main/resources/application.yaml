@@ -10,6 +10,8 @@ spring:
     web-application-type: "reactive"
   webflux:
     base-path: "/api/v1/cryptocoin/"
+routes:
+  schemas: "schemas\\"
 logging:
   level:
     root: "info"

@@ -7,6 +7,9 @@ import reactor.core.publisher.Mono;
 public interface UserCryptocoinRepository extends ReactiveCrudRepository<UserCryptocoinEntity, Integer> {
 
     Mono<UserCryptocoinEntity> save(UserCryptocoinEntity entity);
+    Mono<Void> deleteUserCryptocoinEntityByCryptocoinIdAndUserId(Integer cryptocoinId, Integer userId);
+    Mono<UserCryptocoinEntity> findByCryptocoinIdAndUserId(Integer cryptocoinId, Integer userId);
+
 
 
 }

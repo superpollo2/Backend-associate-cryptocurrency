@@ -40,6 +40,7 @@ subprojects {
         testCompileOnly  "org.projectlombok:lombok:${lombokVersion}"
         compileOnly group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '6.1.0'
         testAnnotationProcessor  "org.projectlombok:lombok:${lombokVersion}"
+        testImplementation 'com.fasterxml.jackson.core:jackson-databind'
         implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
     }
 

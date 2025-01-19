@@ -1,6 +1,8 @@
 package co.com.technicaltestbamcolombia.model.user;
 
+
 import lombok.*;
+
 
 
 @Getter
@@ -8,7 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-public class UserCryptocoin {
+public class UserCryptocoinDTO {
     private Integer userId;
     private Integer cryptocoinId;
+    private Integer amount;
 }

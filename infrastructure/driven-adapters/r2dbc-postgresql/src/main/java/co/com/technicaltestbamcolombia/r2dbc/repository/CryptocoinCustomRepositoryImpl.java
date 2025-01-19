@@ -2,15 +2,17 @@
 package co.com.technicaltestbamcolombia.r2dbc.repository;
 
 
-import co.com.technicaltestbamcolombia.model.Cryptocoin.Cryptocoin;
+import co.com.technicaltestbamcolombia.model.Cryptocoin.CryptocoinDTO;
+import co.com.technicaltestbamcolombia.model.config.CryptoErrorCode;
+import co.com.technicaltestbamcolombia.model.config.CryptoException;
+import co.com.technicaltestbamcolombia.model.user.UserCryptocoinDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
-import org.springframework.data.relational.core.query.Criteria;
-import org.springframework.data.relational.core.query.Query;
+import org.springframework.http.HttpStatus;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Repository
 @AllArgsConstructor(onConstructor = @__(@Autowired))
@@ -19,7 +21,7 @@ public class CryptocoinCustomRepositoryImpl implements CryptocoinCustomRepositor
     private final DatabaseClient databaseClient;
 
     @Override
-    public Flux<Cryptocoin> findCryptocoinsByUserId(Integer userId) {
+    public Flux<CryptocoinDTO> findCryptocoinsByUserId(Integer userId) {
         var sql = """
             SELECT c.* 
             FROM cryptocoin c
@@ -29,7 +31,7 @@ public class CryptocoinCustomRepositoryImpl implements CryptocoinCustomRepositor
 
         return databaseClient.sql(sql)
                 .bind("userId", userId)
-                .map((row, metadata) -> new Cryptocoin(
+                .map((row, metadata) -> new CryptocoinDTO(
                         row.get("cryptocoin_id", Integer.class),
                         row.get("name", String.class),
                         row.get("symbol", String.class),
@@ -39,7 +41,7 @@ public class CryptocoinCustomRepositoryImpl implements CryptocoinCustomRepositor
     }
 
     @Override
-    public Flux<Cryptocoin> findCryptocoinByCountryId(Integer countryId) {
+    public Flux<CryptocoinDTO> findCryptocoinByCountryId(Integer countryId) {
         var sql = """
             SELECT c.* 
             FROM cryptocoin c
@@ -49,13 +51,31 @@ public class CryptocoinCustomRepositoryImpl implements CryptocoinCustomRepositor
 
         return databaseClient.sql(sql)
                 .bind("countryId", countryId)
-                .map((row, metadata) -> new Cryptocoin(
+                .map((row, metadata) -> new CryptocoinDTO(
                         row.get("cryptocoin_id", Integer.class),
                         row.get("name", String.class),
                         row.get("symbol", String.class),
                         row.get("exchange_rate", Double.class)
                 ))
                 .all();
+    }
+
+    @Override
+    public Mono<Long> updateAmountCointUser(UserCryptocoinDTO userCryptocoinDTO) {
+        var sql = """
+            UPDATE usercrytocoin 
+            SET amount = amount + :amount
+            WHERE cryptocoin_id = :cryptocoinId AND user_id = :userId
+            AND (amount + :amount) >= 0
+        """;
+
+        return databaseClient.sql(sql)
+                .bind("amount", userCryptocoinDTO.getAmount())
+                .bind("cryptocoinId", userCryptocoinDTO.getCryptocoinId())
+                .bind("userId", userCryptocoinDTO.getUserId())
+                .fetch()
+                .rowsUpdated();
+
     }
 
 }

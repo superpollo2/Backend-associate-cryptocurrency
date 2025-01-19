@@ -18,4 +18,5 @@ public class UserCryptocoinEntity {
     private Integer userId;
     @Id
     private Integer cryptocoinId;
+    private Integer amount;
 }

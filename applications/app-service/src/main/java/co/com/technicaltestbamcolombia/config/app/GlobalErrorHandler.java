@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.web.server.ServerWebExchange;
@@ -30,14 +31,14 @@ public class GlobalErrorHandler implements ErrorWebExceptionHandler {
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
         exchange.getResponse().getHeaders().setContentType(MediaType.APPLICATION_JSON);
-        var resquest = exchange.getRequest();
+        var request = exchange.getRequest();
         DataBufferFactory bufferFactory = exchange.getResponse().bufferFactory();
         try {
             throw ex;
         }catch (CryptoException exception){
             exchange.getResponse().setStatusCode(HttpStatusCode.valueOf(exception.getStatus()));
             var errors = Errors.builder()
-                    .href(resquest.getURI().toString())
+                    .href(request.getURI().toString())
                     .status(exception.getStatus())
                     .code(exception.getCode())
                     .title(exception.getTitle())
@@ -46,6 +47,20 @@ public class GlobalErrorHandler implements ErrorWebExceptionHandler {
                     .build();
             dataBuffer = bufferFactory.wrap(objectMapper.writeValueAsBytes(errors));
             log.info(errors.getId() + " Error en la solicitud " + exchange.getRequest().toString() );
+        }catch (Exception jsonException) {
+            exchange.getResponse().setStatusCode(HttpStatus.BAD_REQUEST);
+            Errors errors = Errors.builder()
+                    .href(request.getURI().toString())
+                    .status(HttpStatus.BAD_REQUEST.value())
+                    .code("CR001")
+                    .title("Error en la sintaxis del JSON")
+                    .detail("El cuerpo de la solicitud contiene un JSON inválido o mal formado.")
+                    .id(UUID.randomUUID())
+                    .build();
+            dataBuffer = bufferFactory.wrap(objectMapper.writeValueAsBytes(
+                    errors));
+            log.info(errors.getId() + " Error en la solicitud " + exchange.getRequest().toString());
+            log.error(errors.getId() + " Error: JSON inválido - " + jsonException.getMessage());
         }
         return exchange.getResponse().writeWith(Mono.just(dataBuffer));
     }

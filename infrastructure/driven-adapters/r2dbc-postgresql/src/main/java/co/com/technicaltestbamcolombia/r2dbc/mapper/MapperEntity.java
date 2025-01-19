@@ -1,24 +1,25 @@
 package co.com.technicaltestbamcolombia.r2dbc.mapper;
 
-import co.com.technicaltestbamcolombia.model.user.UserCryptocoin;
+import co.com.technicaltestbamcolombia.model.user.UserCryptocoinDTO;
 import co.com.technicaltestbamcolombia.r2dbc.entity.UserCryptocoinEntity;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
 public class MapperEntity {
 
-    public UserCryptocoinEntity toEntity(UserCryptocoin userCryptocoin) {
+    public UserCryptocoinEntity toEntity(UserCryptocoinDTO userCryptocoinDTO) {
         return UserCryptocoinEntity.builder()
-                .cryptocoinId(userCryptocoin.getCryptocoinId())
-                .userId(userCryptocoin.getUserId())
+                .cryptocoinId(userCryptocoinDTO.getCryptocoinId())
+                .userId(userCryptocoinDTO.getUserId())
+                .amount(userCryptocoinDTO.getAmount())
                 .build();
     }
 
-    public UserCryptocoin toDomain(UserCryptocoinEntity userCryptocoinEntity) {
-        return UserCryptocoin.builder()
+    public UserCryptocoinDTO toDomain(UserCryptocoinEntity userCryptocoinEntity) {
+        return UserCryptocoinDTO.builder()
                 .cryptocoinId(userCryptocoinEntity.getCryptocoinId())
                 .userId(userCryptocoinEntity.getUserId())
+                .amount(userCryptocoinEntity.getAmount())
                 .build();
     }
 }

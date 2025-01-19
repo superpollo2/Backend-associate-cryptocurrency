@@ -1,13 +1,14 @@
 package co.com.technicaltestbamcolombia.model.Cryptocoin.gateways;
 
-import co.com.technicaltestbamcolombia.model.Cryptocoin.Cryptocoin;
-import co.com.technicaltestbamcolombia.model.user.UserCryptocoin;
+import co.com.technicaltestbamcolombia.model.Cryptocoin.CryptocoinDTO;
+import co.com.technicaltestbamcolombia.model.user.UserCryptocoinDTO;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface CryptocoinGateway {
-    Flux<Cryptocoin> findByCryptocoinId(Integer cryptocoinId);
-    Flux<Cryptocoin> findCryptocoinByUserId(Integer userId);
-    Flux<Cryptocoin> findCryptocoinByCountryId(Integer countryId);
-    Mono<UserCryptocoin> saveAssociateCoin(UserCryptocoin userCryptocoin);
+    Flux<CryptocoinDTO> findCryptocoinByUserId(Integer userId);
+    Flux<CryptocoinDTO> findCryptocoinByCountryId(Integer countryId);
+    Mono<UserCryptocoinDTO> saveAssociateCoin(UserCryptocoinDTO userCryptocoinDTO);
+    Mono<Void> deleteCoinFromUser(UserCryptocoinDTO userCryptocoinDTO);
+    Mono<UserCryptocoinDTO> editAmountCoinFromUser(UserCryptocoinDTO userCryptocoinDTO);
 }

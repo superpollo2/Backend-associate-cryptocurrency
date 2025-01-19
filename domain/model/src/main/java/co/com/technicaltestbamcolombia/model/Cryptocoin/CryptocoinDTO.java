@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)
-public class Cryptocoin {
+public class CryptocoinDTO {
 
     private Integer cryptocoinId;
     private String cryptocoinName;
