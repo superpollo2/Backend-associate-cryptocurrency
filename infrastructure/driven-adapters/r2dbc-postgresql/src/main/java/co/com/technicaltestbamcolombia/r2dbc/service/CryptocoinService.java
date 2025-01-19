@@ -2,13 +2,15 @@ package co.com.technicaltestbamcolombia.r2dbc.service;
 
 import co.com.technicaltestbamcolombia.model.Cryptocoin.Cryptocoin;
 import co.com.technicaltestbamcolombia.model.Cryptocoin.gateways.CryptocoinGateway;
+import co.com.technicaltestbamcolombia.model.config.CryptoErrorCode;
+import co.com.technicaltestbamcolombia.model.config.CryptoException;
 import co.com.technicaltestbamcolombia.model.user.UserCryptocoin;
-import co.com.technicaltestbamcolombia.r2dbc.entity.UserCryptocoinEntity;
 import co.com.technicaltestbamcolombia.r2dbc.mapper.MapperEntity;
 import co.com.technicaltestbamcolombia.r2dbc.repository.CryptocoinCustomRepository;
 import co.com.technicaltestbamcolombia.r2dbc.repository.UserCryptocoinRepository;
-import co.com.technicaltestbamcolombia.r2dbc.repository.UserRepository;
+import io.netty.handler.codec.http.HttpStatusClass;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -49,7 +51,9 @@ public class CryptocoinService implements CryptocoinGateway {
                                 return userCryptocoinRepository.save(entity)
                                         .map(mapperEntity::toDomain);
                             } else {
-                                return Mono.error(new RuntimeException("La moneda no está disponible para este país"));
+                               throw new CryptoException(HttpStatus.BAD_REQUEST.value(),
+                                       CryptoErrorCode.CRB000.getErrorCode(), CryptoErrorCode.CRB000.getErrorTitle(),
+                                       "La moneda no esta permitida para el país en el reside el usuario");
                             }
                         }));
         }
