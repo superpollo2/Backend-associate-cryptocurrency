@@ -1,14 +1,27 @@
-##Spring Configuration
 server:
   port: 8080
 spring:
   application:
-    name: associateCryptocurrency
+    name: "associateCryptocurrency"
   devtools:
     add-properties: false
-  h2:
-    console:
-      enabled: true
-      path: /h2
-  profiles:
-    include:
+  main:
+    web-application-type: "reactive"
+    webflux:
+      base-path: "/api/v1/cryptocoin/"
+logging:
+  level:
+    root: "info"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+jwt:
+  secret: "jwt.secret=S3cr3tKeyF0rJWT@2025!"
+cors:
+  allowed-origins: "http://localhost:4200,http://localhost:8080"

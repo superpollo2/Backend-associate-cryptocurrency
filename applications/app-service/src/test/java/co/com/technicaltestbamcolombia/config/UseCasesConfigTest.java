@@ -1,5 +1,6 @@
 package co.com.technicaltestbamcolombia.config;
 
+import co.com.technicaltestbamcolombia.config.app.UseCasesConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
