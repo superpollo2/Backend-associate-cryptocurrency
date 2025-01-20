@@ -56,29 +56,24 @@ https://drive.google.com/drive/folders/1X6vRp6KC9GiFQ4bXs6o6Vn3JlGBOsIcv?usp=dri
 ## Sonarcloud
 https://sonarcloud.io/project/overview?id=superpollo2_Backend-associate-cryptocurrency
 
-
-
 ---
 ## 3. Diagrama de Flujo  
 ![Diagrama de Flujo](images/img_1.png)  
 
-## Trabajo a Futuro
+## 4. Trabajo a Futuro
 
 Aún queda trabajo por realizar en el proyecto, pero se ha logrado avanzar significativamente, alcanzando un buen porcentaje de desarrollo. Hasta el momento se han abordado aspectos clave como la gestión de recepción de errores, la implementación de validaciones de entrada mediante JsonSchema, la creación de endpoints funcionales, la realización de pruebas unitarias, y la configuración adecuada de repositorios, entre otros.
 
 Para completar el proyecto, las próximas tareas incluyen:
 
-Mejorar la documentación en Swagger: Incorporar todos los casos de uso del sistema para ofrecer una visión más detallada y completa a los desarrolladores y usuarios técnicos.
+- Mejorar la documentación en Swagger: Incorporar todos los casos de uso del sistema para ofrecer una visión más detallada y completa a los desarrolladores y usuarios técnicos.
+- Mapear los errores en una matriz para mayor claridad y solución de problemas
+- Agregar pruebas de aceptación automatizadas: Implementar herramientas como Cucumber para garantizar que todos los flujos de trabajo principales cumplan con los criterios de aceptación definidos.
+- Despliegue: Realizar un despliegue eficiente en el entorno de producción, asegurando la estabilidad y disponibilidad del sistema.
+- Automatización: Integrar procesos automatizados que mejoren el flujo de desarrollo, pruebas y despliegue, optimizando la entrega continua y el mantenimiento.
+- Estas actividades consolidarán el proyecto y garantizarán su calidad, robustez y alineación con los objetivos iniciales.
 
-Agregar pruebas de aceptación automatizadas: Implementar herramientas como Cucumber para garantizar que todos los flujos de trabajo principales cumplan con los criterios de aceptación definidos.
-
-Despliegue: Realizar un despliegue eficiente en el entorno de producción, asegurando la estabilidad y disponibilidad del sistema.
-
-Automatización: Integrar procesos automatizados que mejoren el flujo de desarrollo, pruebas y despliegue, optimizando la entrega continua y el mantenimiento.
-
-Estas actividades consolidarán el proyecto y garantizarán su calidad, robustez y alineación con los objetivos iniciales.
-
-## para correr este proyecto 
+## 5. para correr este proyecto 
 Requisitos para ejecutar el proyecto:
 
 Maven: Versión 8.0 o superior.
