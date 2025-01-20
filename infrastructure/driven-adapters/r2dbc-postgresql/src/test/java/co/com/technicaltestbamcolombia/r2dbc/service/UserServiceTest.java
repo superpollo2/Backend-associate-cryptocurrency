@@ -1,7 +1,7 @@
 package co.com.technicaltestbamcolombia.r2dbc.service;
 
 import co.com.technicaltestbamcolombia.r2dbc.repository.UserRepository;
-import co.com.technicaltestbamcolombia.r2dbc.service.builders.TestBuilders;
+import co.com.technicaltestbamcolombia.r2dbc.service.providers.TestBuilders;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

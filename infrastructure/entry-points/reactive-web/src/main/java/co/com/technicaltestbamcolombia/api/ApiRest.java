@@ -7,6 +7,7 @@ import co.com.technicaltestbamcolombia.model.user.UserCryptocoinDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -50,9 +51,11 @@ public class ApiRest {
                 });
     }
 
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "/user/associate-coin")
     public Mono<UserCryptocoinDTO> associateCoinToUser(@RequestBody JsonNode body) {
         var init = Instant.now();
+        log.info("eso " + body);
         return Mono.just(body)
                 .doFirst(() -> log.info("Iniciando consulta"))
                 .doOnNext(jsonSchemaValidator::validateWithJsonSchema)

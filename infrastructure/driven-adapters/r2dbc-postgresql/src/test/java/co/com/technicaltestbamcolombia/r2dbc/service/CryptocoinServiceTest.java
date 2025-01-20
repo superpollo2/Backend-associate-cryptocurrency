@@ -6,7 +6,7 @@ import co.com.technicaltestbamcolombia.r2dbc.entity.UserCryptocoinEntity;
 import co.com.technicaltestbamcolombia.r2dbc.mapper.MapperEntity;
 import co.com.technicaltestbamcolombia.r2dbc.repository.CryptocoinCustomRepository;
 import co.com.technicaltestbamcolombia.r2dbc.repository.UserCryptocoinRepository;
-import co.com.technicaltestbamcolombia.r2dbc.service.builders.TestBuilders;
+import co.com.technicaltestbamcolombia.r2dbc.service.providers.TestBuilders;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

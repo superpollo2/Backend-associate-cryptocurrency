@@ -52,13 +52,5 @@ public class PostgresConfiguration extends AbstractR2dbcConfiguration {
 		return new ConnectionPool(builder.build());
 	}
 
-	@Bean
-	public DatabaseClient databaseClient(ConnectionFactory connectionFactory) {
-		return DatabaseClient.create(connectionFactory);
-	}
 
-	@Bean
-	public CryptocoinCustomRepository cryptocoinCustomRepository(DatabaseClient databaseClient) {
-		return new CryptocoinCustomRepositoryImpl(databaseClient);
-	}
 }
