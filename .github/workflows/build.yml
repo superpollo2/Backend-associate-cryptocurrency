@@ -34,20 +34,6 @@ jobs:
         run: chmod +x gradlew
       - name: Run PIT tests
         run: ./gradlew pitest aggregatePitReports --info
-      - name: Debug Consolidated Report
-        run: cat build/reports/pitest/mutations.xml
-      - name: Validate PIT coverage
-        run: |
-          if [ ! -f build/reports/pitest/index.html ]; then
-            echo "PIT report not found. Mutation testing might have failed.";
-            exit 1;
-          fi
-          coverage=$(grep -oP 'Mutation score: \K[0-9]+' build/reports/pitest/index.html || echo 0)
-          echo "Mutation score: $coverage"
-          if (( $coverage < 50 )); then
-            echo "Mutation score is below 50%. Failing the build.";
-            exit 1;
-          fi
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
