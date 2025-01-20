@@ -5,9 +5,8 @@ import co.com.technicaltestbamcolombia.model.Cryptocoin.gateways.CryptocoinGatew
 import co.com.technicaltestbamcolombia.model.config.CryptoErrorCode;
 import co.com.technicaltestbamcolombia.model.config.CryptoException;
 import co.com.technicaltestbamcolombia.model.user.UserCryptocoinDTO;
-import co.com.technicaltestbamcolombia.r2dbc.mapper.MapperEntity;
+import co.com.technicaltestbamcolombia.r2dbc.mapper.Mapper;
 import co.com.technicaltestbamcolombia.r2dbc.repository.CryptocoinCustomRepository;
-import co.com.technicaltestbamcolombia.r2dbc.repository.CryptocoinCustomRepositoryImpl;
 import co.com.technicaltestbamcolombia.r2dbc.repository.UserCryptocoinRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -21,7 +20,7 @@ public class CryptocoinService implements CryptocoinGateway {
 
     private final CryptocoinCustomRepository cryptocoinCustomRepository;
     private final UserCryptocoinRepository userCryptocoinRepository;
-    private final MapperEntity mapperEntity;
+    private final Mapper mapper;
     private final UserService userService;
 
 
@@ -74,9 +73,9 @@ public class CryptocoinService implements CryptocoinGateway {
                 .flatMap(existingEntity -> Mono.just(userCryptocoinDTO))
                 .switchIfEmpty(
                         Mono.defer(() -> {
-                            var entity = mapperEntity.toEntity(userCryptocoinDTO);
+                            var entity = mapper.toEntity(userCryptocoinDTO);
                             return userCryptocoinRepository.save(entity)
-                                    .map(mapperEntity::toDomain);
+                                    .map(mapper::toDomain);
                         })
                 );
     }
@@ -113,6 +112,6 @@ public class CryptocoinService implements CryptocoinGateway {
                             userCryptocoinDTO.getUserId()
                     );
                 })
-                .map(mapperEntity::toDomain);
+                .map(mapper::toDomain);
     }
 }

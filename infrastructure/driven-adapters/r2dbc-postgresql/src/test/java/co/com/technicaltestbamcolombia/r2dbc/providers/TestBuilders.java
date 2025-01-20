@@ -1,4 +1,4 @@
-package co.com.technicaltestbamcolombia.r2dbc.service.providers;
+package co.com.technicaltestbamcolombia.r2dbc.providers;
 
 import co.com.technicaltestbamcolombia.model.Cryptocoin.CryptocoinDTO;
 import co.com.technicaltestbamcolombia.model.user.UserCryptocoinDTO;

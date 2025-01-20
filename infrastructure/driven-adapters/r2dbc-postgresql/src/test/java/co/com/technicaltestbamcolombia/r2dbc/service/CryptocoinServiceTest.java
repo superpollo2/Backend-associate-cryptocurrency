@@ -3,10 +3,10 @@ package co.com.technicaltestbamcolombia.r2dbc.service;
 import co.com.technicaltestbamcolombia.model.Cryptocoin.CryptocoinDTO;
 import co.com.technicaltestbamcolombia.model.config.CryptoException;
 import co.com.technicaltestbamcolombia.r2dbc.entity.UserCryptocoinEntity;
-import co.com.technicaltestbamcolombia.r2dbc.mapper.MapperEntity;
+import co.com.technicaltestbamcolombia.r2dbc.mapper.Mapper;
 import co.com.technicaltestbamcolombia.r2dbc.repository.CryptocoinCustomRepository;
 import co.com.technicaltestbamcolombia.r2dbc.repository.UserCryptocoinRepository;
-import co.com.technicaltestbamcolombia.r2dbc.service.providers.TestBuilders;
+import co.com.technicaltestbamcolombia.r2dbc.providers.TestBuilders;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -29,7 +29,7 @@ class CryptocoinServiceTest {
     private UserCryptocoinRepository userCryptocoinRepository;
 
     @Mock
-    private MapperEntity mapperEntity;
+    private Mapper mapper;
 
     @Mock
     private UserService userService;
@@ -167,7 +167,7 @@ class CryptocoinServiceTest {
                 .thenReturn(Mono.just(1L));
         when(userCryptocoinRepository.findByCryptocoinIdAndUserId(request.getCryptocoinId(), request.getUserId()))
                 .thenReturn(Mono.just(userCryptocoinEntity));
-        when(mapperEntity.toDomain(userCryptocoinEntity))
+        when(mapper.toDomain(userCryptocoinEntity))
                 .thenReturn(request);
 
         var result = cryptocoinService.editAmountCoinFromUser(request);
@@ -178,7 +178,7 @@ class CryptocoinServiceTest {
                 .verifyComplete();
         verify(cryptocoinCustomRepository).updateAmountCointUser(request);
         verify(userCryptocoinRepository).findByCryptocoinIdAndUserId(request.getCryptocoinId(), request.getUserId());
-        verify(mapperEntity).toDomain(userCryptocoinEntity);
+        verify(mapper).toDomain(userCryptocoinEntity);
     }
 
     @Test
@@ -202,7 +202,7 @@ class CryptocoinServiceTest {
                 .verify();
         verify(cryptocoinCustomRepository).updateAmountCointUser(request);
         verify(userCryptocoinRepository, never()).findByCryptocoinIdAndUserId(anyInt(), anyInt());
-        verify(mapperEntity, never()).toDomain(any());
+        verify(mapper, never()).toDomain(any());
     }
 
     @Test
@@ -226,7 +226,7 @@ class CryptocoinServiceTest {
         verify(userService).findCountryByUserId(request.getUserId());
         verify(cryptocoinCustomRepository).findCryptocoinByCountryId(countryId);
         verify(userCryptocoinRepository).findByCryptocoinIdAndUserId(request.getCryptocoinId(), request.getUserId());
-        verifyNoInteractions(mapperEntity);
+        verifyNoInteractions(mapper);
     }
 
 
