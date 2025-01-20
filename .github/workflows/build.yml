@@ -34,6 +34,8 @@ jobs:
         run: chmod +x gradlew
       - name: Run PIT tests
         run: ./gradlew pitest --info
+      - name: Debug Consolidated Report
+        run: cat build/reports/pitest/mutations.xml
       - name: Validate PIT coverage
         run: |
           if [ ! -f build/reports/pitest/index.html ]; then
