@@ -26,7 +26,7 @@ public class CryptocoinUseCase {
                                 404,
                                 CryptoErrorCode.CRB00.getErrorCode(),
                                 CryptoErrorCode.CRB00.getErrorTitle(),
-                                "La moneda ya se encuentrA asociada al usuario"
+                                "La moneda ya se encuentra asociada al usuario"
                         ));
 
                     }

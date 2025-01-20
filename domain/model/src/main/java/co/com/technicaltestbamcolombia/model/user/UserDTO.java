@@ -1,18 +1,16 @@
 package co.com.technicaltestbamcolombia.model.user;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder(toBuilder = true)
 public class UserDTO {
 
     private int userId;
     private String username;
     private String password;
-    private int country;
+    private int countryId;
 }

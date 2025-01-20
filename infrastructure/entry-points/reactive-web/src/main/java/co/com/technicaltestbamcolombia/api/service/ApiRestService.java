@@ -22,8 +22,8 @@ public class ApiRestService {
 
     }
 
-    public Mono<UserCryptocoinDTO> associateCoinToUser(UserCryptocoinDTO userCryptocoinDTO) {
-        return cryptocoinUseCase.associateCoinToUser(userCryptocoinDTO);
+    public Mono<UserCryptocoinDTO> associateCoinToUser(JsonNode body) {
+        return cryptocoinUseCase.associateCoinToUser(objectMapper.convertValue(body,UserCryptocoinDTO.class));
 
     }
 
@@ -37,7 +37,9 @@ public class ApiRestService {
         return cryptocoinUseCase.deleteCoinFromUser(objectMapper.convertValue(body, UserCryptocoinDTO.class));
     }
 
-    public Mono<UserCryptocoinDTO> editAmounCoinFromUser(UserCryptocoinDTO userCryptocoinDTO) {
-        return cryptocoinUseCase.editAmounCoinFromUser(userCryptocoinDTO);
+    public Mono<UserCryptocoinDTO> editAmounCoinFromUser(JsonNode body) {
+        return cryptocoinUseCase.editAmounCoinFromUser(objectMapper.convertValue(body,UserCryptocoinDTO.class));
     }
+
+
 }

@@ -11,7 +11,6 @@ import co.com.technicaltestbamcolombia.r2dbc.repository.UserRepository;
 import co.com.technicaltestbamcolombia.r2dbc.service.CryptocoinService;
 import co.com.technicaltestbamcolombia.r2dbc.service.UserService;
 import co.com.technicaltestbamcolombia.usecase.CryptocoinUseCase;
-import co.com.technicaltestbamcolombia.usecase.UserUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

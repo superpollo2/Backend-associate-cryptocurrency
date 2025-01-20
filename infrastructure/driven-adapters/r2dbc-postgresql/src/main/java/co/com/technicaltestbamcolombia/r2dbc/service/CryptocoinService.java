@@ -29,7 +29,7 @@ public class CryptocoinService implements CryptocoinGateway {
         return cryptocoinCustomRepository.findCryptocoinsByUserId(userId)
                 .switchIfEmpty(Flux.defer(() -> {
                     throw new CryptoException(HttpStatus.NOT_FOUND.value(), CryptoErrorCode.CRB00.getErrorCode()
-                            ,CryptoErrorCode.CRB00.getErrorTitle() , "No hay Cryptomonedas para el usuario:" + userId);
+                            ,CryptoErrorCode.CRB00.getErrorTitle() , "No hay Cryptomonedas para el usuario: " + userId);
                 }));
     }
 
@@ -38,40 +38,46 @@ public class CryptocoinService implements CryptocoinGateway {
         return cryptocoinCustomRepository.findCryptocoinByCountryId(countryId)
                 .switchIfEmpty(Flux.defer(() -> {
                     throw new CryptoException(HttpStatus.NOT_FOUND.value(), CryptoErrorCode.CRB00.getErrorCode()
-                            ,CryptoErrorCode.CRB00.getErrorTitle() , "No hay Cryptomonedas para el país :" + countryId);
+                            ,CryptoErrorCode.CRB00.getErrorTitle() , "No hay Cryptomonedas para el país: " + countryId);
                 }));
     }
 
     @Override
     public Mono<UserCryptocoinDTO> saveAssociateCoin(UserCryptocoinDTO userCryptocoinDTO) {
-
         return userService.findCountryByUserId(userCryptocoinDTO.getUserId())
-                .flatMap(countryId ->
-                        findCryptocoinByCountryId(countryId)
-                                .filter(cryptocoin -> cryptocoin.getCryptocoinId().equals(userCryptocoinDTO.getCryptocoinId()))
-                                .hasElements()
-                                .flatMap(isAvailable -> {
-                                    if (isAvailable) {
-                                        return userCryptocoinRepository.findByCryptocoinIdAndUserId(userCryptocoinDTO.getCryptocoinId(), userCryptocoinDTO.getUserId())
-                                                .flatMap(existingEntity -> Mono.just(userCryptocoinDTO))
-                                                .switchIfEmpty(
-                                                        Mono.defer(() -> {
-                                                            var entity = mapperEntity.toEntity(userCryptocoinDTO);
-                                                            return userCryptocoinRepository.save(entity)
-                                                                    .map(mapperEntity::toDomain);
-                                                        })
-                                                );
-                                    } else {
-                                        return Mono.error(new CryptoException(
-                                                HttpStatus.BAD_REQUEST.value(),
-                                                CryptoErrorCode.CRB00.getErrorCode(),
-                                                CryptoErrorCode.CRB00.getErrorTitle(),
-                                                "La moneda no está permitida para el país en el que reside el usuario"
-                                        ));
-                                    }
-                                })
+                .flatMap(countryId -> validateCryptocoinForCountry(countryId, userCryptocoinDTO)
+                        .flatMap(isAvailable -> {
+                            if (isAvailable) {
+                                return checkExistingAssociationOrSave(userCryptocoinDTO);
+                            } else {
+                                return Mono.error(new CryptoException(
+                                        HttpStatus.BAD_REQUEST.value(),
+                                        CryptoErrorCode.CRB00.getErrorCode(),
+                                        CryptoErrorCode.CRB00.getErrorTitle(),
+                                        "La moneda no está permitida para el país en el que reside el usuario"
+                                ));
+                            }
+                        })
                 );
+    }
 
+    private Mono<Boolean> validateCryptocoinForCountry(Integer countryId, UserCryptocoinDTO userCryptocoinDTO) {
+        return findCryptocoinByCountryId(countryId)
+                .filter(cryptocoin -> cryptocoin.getCryptocoinId().equals(userCryptocoinDTO.getCryptocoinId()))
+                .hasElements();
+    }
+
+    private Mono<UserCryptocoinDTO> checkExistingAssociationOrSave(UserCryptocoinDTO userCryptocoinDTO) {
+        return userCryptocoinRepository.findByCryptocoinIdAndUserId(
+                        userCryptocoinDTO.getCryptocoinId(), userCryptocoinDTO.getUserId())
+                .flatMap(existingEntity -> Mono.just(userCryptocoinDTO))
+                .switchIfEmpty(
+                        Mono.defer(() -> {
+                            var entity = mapperEntity.toEntity(userCryptocoinDTO);
+                            return userCryptocoinRepository.save(entity)
+                                    .map(mapperEntity::toDomain);
+                        })
+                );
     }
 
     @Override
@@ -96,8 +102,8 @@ public class CryptocoinService implements CryptocoinGateway {
                     if (updatedRows == 0) {
                         return Mono.error(new CryptoException(
                                 HttpStatus.NOT_FOUND.value(),
-                                CryptoErrorCode.CRB01.getErrorCode(),
-                                CryptoErrorCode.CRB01.getErrorTitle(),
+                                CryptoErrorCode.CRB00.getErrorCode(),
+                                CryptoErrorCode.CRB00.getErrorTitle(),
                                 "No existe información o el valor del amount da un saldo negativo"
                         ));
                     }

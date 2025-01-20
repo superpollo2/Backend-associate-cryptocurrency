@@ -20,6 +20,6 @@
       "description": "El monto de la transacción, no puede ser menor a -1000 ni mayor a 1000"
     }
   },
-  "required": ["userId", "cryptocoinId", "amount"],
+  "required": ["userId", "cryptocoinId"],
   "additionalProperties": false
 }

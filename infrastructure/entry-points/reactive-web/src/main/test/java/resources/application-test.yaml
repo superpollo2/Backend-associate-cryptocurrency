@@ -1,0 +1,30 @@
+server:
+  port: 8080
+  address: 0.0.0.0
+spring:
+  application:
+    name: "associateCryptocurrency"
+  devtools:
+    add-properties: false
+  main:
+    web-application-type: "reactive"
+  webflux:
+    base-path: "/api/v1/cryptocoin/"
+routes:
+  schemas: "schemas\\"
+logging:
+  level:
+    root: "info"
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+jwt:
+  secret: "jwt.secret=S3cr3tKeyF0rJWT@2025!"
+cors:
+  allowed-origins: "http://localhost:4200,http://localhost:8080"

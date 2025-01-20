@@ -51,15 +51,18 @@ public class ApiRest {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "/user/associate-coin")
-    public Mono<UserCryptocoinDTO> associateCoinToUser(@RequestBody UserCryptocoinDTO userCryptocoinDTO) {
-        var startTime = LocalDateTime.now();
-        log.info("Iniciando consulta");
-        return apiRestService.associateCoinToUser(userCryptocoinDTO)
-                .doFinally(siganType -> {
-                    Duration duration = Duration.between(startTime, LocalDateTime.now());
-                    log.info("consulta asosciar nueva moneda. Duración total: {} segundos", duration.getSeconds());
-                });
+    public Mono<UserCryptocoinDTO> associateCoinToUser(@RequestBody JsonNode body) {
+        var init = Instant.now();
+        return Mono.just(body)
+                .doFirst(() -> log.info("Iniciando consulta"))
+                .doOnNext(jsonSchemaValidator::validateWithJsonSchema)
+                .flatMap(apiRestService::associateCoinToUser)
+                .doAfterTerminate(() ->
+                        log.info("Finalización del request, " +
+                                        "tiempo procesando la solicitud en milis: {}",
+                                ChronoUnit.MILLIS.between(init, Instant.now())));
     }
+
 
     @DeleteMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "/user/associate-coin/delete")
     public Mono<Void> deleteCoinFromUser(@RequestBody JsonNode body) {
@@ -76,13 +79,15 @@ public class ApiRest {
     }
 
     @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "/user/associate-coin/edit")
-    public Mono<UserCryptocoinDTO> editAmountCoinFromUser(@RequestBody UserCryptocoinDTO userCryptocoinDTO) {
-        var startTime = LocalDateTime.now();
-        log.info("Iniciando consulta");
-        return apiRestService.editAmounCoinFromUser(userCryptocoinDTO)
-                .doFinally(siganType -> {
-                    Duration duration = Duration.between(startTime, LocalDateTime.now());
-                    log.info("consulta editar cantidad monedas. Duración total: {} segundos", duration.getSeconds());
-                });
+    public Mono<UserCryptocoinDTO> editAmountCoinFromUser(@RequestBody JsonNode body) {
+        var init = Instant.now();
+        return Mono.just(body)
+                .doFirst(() -> log.info("Iniciando consulta"))
+                .doOnNext(jsonSchemaValidator::validateWithJsonSchema)
+                .flatMap(apiRestService::editAmounCoinFromUser)
+                .doAfterTerminate(() ->
+                        log.info("Finalización del request, " +
+                                        "tiempo procesando la solicitud en milis: {}",
+                                ChronoUnit.MILLIS.between(init, Instant.now())));
     }
 }
