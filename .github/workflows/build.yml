@@ -33,7 +33,7 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
       - name: Run PIT tests
-        run: ./gradlew pitest aggregatePitReports --info
+        run: ./gradlew pitest --info
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
