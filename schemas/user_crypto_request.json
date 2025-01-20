@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "Associar / editar / eliminar una moneda a un usuario",
+  "properties": {
+    "userId": {
+      "type": "integer",
+      "minLength": 1,
+      "description": "El ID del usuario, debe númerico"
+    },
+    "cryptocoinId": {
+      "type": "integer",
+      "minLength": 1,
+      "description": "El ID de la criptomoneda, debe ser númerico"
+    },
+    "amount": {
+      "type": "integer",
+      "minimum": -1000,
+      "minLength": 1000,
+      "description": "El monto de la transacción, no puede ser menor a -1000 ni mayor a 1000"
+    }
+  },
+  "required": ["userId", "cryptocoinId"],
+  "additionalProperties": false
+}

@@ -29,16 +29,18 @@ subprojects {
     dependencies {
         implementation 'io.projectreactor:reactor-core'
         implementation 'io.projectreactor.addons:reactor-extra'
+        //implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.12.6'
 
         testImplementation 'io.projectreactor.tools:blockhound-junit-platform:1.0.10.RELEASE'
-
         testImplementation 'io.projectreactor:reactor-test'
         testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
         annotationProcessor  "org.projectlombok:lombok:${lombokVersion}"
         testCompileOnly  "org.projectlombok:lombok:${lombokVersion}"
+        compileOnly group: 'jakarta.servlet', name: 'jakarta.servlet-api', version: '6.1.0'
         testAnnotationProcessor  "org.projectlombok:lombok:${lombokVersion}"
+        testImplementation 'com.fasterxml.jackson.core:jackson-databind'
         implementation platform("org.springframework.boot:spring-boot-dependencies:${springBootVersion}")
     }
 
@@ -54,8 +56,7 @@ subprojects {
 
     pitest {
         targetClasses = ['co.com.technicaltestbamcolombia.*']
-        excludedClasses = []
-        excludedTestClasses = []
+        excludedClasses = ['**.config.**', '**.model.**', '**.webclient.**', '**.util.**', '**.mappers.**', '**.mapper.**,**.repository.**' ]
         pitestVersion = '1.17.1'
         verbose = false
         outputFormats = ['XML', 'HTML']
@@ -102,7 +103,8 @@ tasks.register('jacocoMergedReport', JacocoReport) {
 
 tasks.withType(JavaCompile).configureEach {
     options.compilerArgs = [
-            '-Amapstruct.suppressGeneratorTimestamp=true'
+            '-Amapstruct.suppressGeneratorTimestamp=true',
+            '-parameters'
     ]
 }
 
