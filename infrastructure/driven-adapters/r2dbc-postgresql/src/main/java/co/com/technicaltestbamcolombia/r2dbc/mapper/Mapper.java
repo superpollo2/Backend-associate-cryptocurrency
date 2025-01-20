@@ -1,6 +1,8 @@
 package co.com.technicaltestbamcolombia.r2dbc.mapper;
 
+import co.com.technicaltestbamcolombia.model.country.CountryDTO;
 import co.com.technicaltestbamcolombia.model.user.UserCryptocoinDTO;
+import co.com.technicaltestbamcolombia.r2dbc.entity.CountryEntity;
 import co.com.technicaltestbamcolombia.r2dbc.entity.UserCryptocoinEntity;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,13 @@ public class Mapper {
                 .cryptocoinId(userCryptocoinEntity.getCryptocoinId())
                 .userId(userCryptocoinEntity.getUserId())
                 .amount(userCryptocoinEntity.getAmount())
+                .build();
+    }
+
+    public CountryDTO toDomainCountry(CountryEntity countryEntity){
+        return CountryDTO.builder()
+                .countryId(countryEntity.getCountryId())
+                .countryName(countryEntity.getName())
                 .build();
     }
 }

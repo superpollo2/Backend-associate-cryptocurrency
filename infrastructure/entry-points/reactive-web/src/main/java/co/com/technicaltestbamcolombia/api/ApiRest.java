@@ -2,7 +2,8 @@ package co.com.technicaltestbamcolombia.api;
 
 import co.com.technicaltestbamcolombia.api.config.util.JsonSchemaValidator;
 import co.com.technicaltestbamcolombia.api.service.ApiRestService;
-import co.com.technicaltestbamcolombia.model.Cryptocoin.CryptocoinDTO;
+import co.com.technicaltestbamcolombia.model.Cryptocoin.CryptocoinUserAmountDTO;
+import co.com.technicaltestbamcolombia.model.Cryptocoin.CrytocoinCountryDTO;
 import co.com.technicaltestbamcolombia.model.user.UserCryptocoinDTO;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.AllArgsConstructor;
@@ -28,11 +29,13 @@ public class ApiRest {
     private final JsonSchemaValidator jsonSchemaValidator;
 
 
-    @GetMapping(path = "/country/{countryId}/coins")
-    public Flux<CryptocoinDTO> getAvailableCryptoinsByCountries(@PathVariable("countryId") int countryId) {
+
+
+    @GetMapping(path = "/country/{userId}/coins-availables")
+    public Mono<CrytocoinCountryDTO>  getAvailableCryptoinsByCountries(@PathVariable("userId") int userId) {
         var startTime = LocalDateTime.now();
         log.info("Iniciando consulta");
-        return apiRestService.availableCryptoinsByCountries(countryId)
+        return apiRestService.availableCryptoinsByCountries(userId)
                 .doFinally(siganType -> {
                     Duration duration = Duration.between(startTime, LocalDateTime.now());
                     log.info("consulta monedas disponibles por país. Duración total: {} segundos", duration.getSeconds());
@@ -40,8 +43,7 @@ public class ApiRest {
     }
 
     @GetMapping(path = "/user/{userId}/coins")
-
-    public Flux<CryptocoinDTO> getAllCryptocoinsUser(@PathVariable("userId") int userId) {
+    public Flux<CryptocoinUserAmountDTO> getAllCryptocoinsUser(@PathVariable("userId") int userId) {
         var startTime = LocalDateTime.now();
         log.info("Iniciando consulta");
         return apiRestService.getAllAvailableCryptocoins(userId)
@@ -51,9 +53,11 @@ public class ApiRest {
                 });
     }
 
+
+
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, path = "/user/associate-coin")
-    public Mono<UserCryptocoinDTO> associateCoinToUser(@RequestBody JsonNode body) {
+    public Mono<CryptocoinUserAmountDTO> associateCoinToUser(@RequestBody JsonNode body) {
         var init = Instant.now();
         log.info("eso " + body);
         return Mono.just(body)

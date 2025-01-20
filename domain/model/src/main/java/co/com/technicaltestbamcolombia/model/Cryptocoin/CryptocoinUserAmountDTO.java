@@ -1,17 +1,17 @@
 package co.com.technicaltestbamcolombia.model.Cryptocoin;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CryptocoinDTO {
+@Builder(toBuilder = true)
+public class CryptocoinUserAmountDTO {
+
     private Integer cryptocoinId;
     private String cryptocoinName;
     private String symbol;
     private Double exchangeRate;
+    private Integer amount;
 }
