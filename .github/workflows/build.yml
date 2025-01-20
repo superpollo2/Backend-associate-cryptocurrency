@@ -33,7 +33,7 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x gradlew
       - name: Run PIT tests
-        run: ./gradlew pitest --info
+        run: ./gradlew pitest aggregatePitReports --info
       - name: Debug Consolidated Report
         run: cat build/reports/pitest/mutations.xml
       - name: Validate PIT coverage
