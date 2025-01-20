@@ -1,5 +1,7 @@
 package co.com.technicaltestbamcolombia.r2dbc.config;
 
+import co.com.technicaltestbamcolombia.r2dbc.repository.CryptocoinCustomRepository;
+import co.com.technicaltestbamcolombia.r2dbc.repository.CryptocoinCustomRepositoryImpl;
 import io.r2dbc.pool.ConnectionPool;
 import io.r2dbc.pool.ConnectionPoolConfiguration;
 import io.r2dbc.postgresql.PostgresqlConnectionConfiguration;
@@ -12,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
+import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.util.StringUtils;
 
 @RequiredArgsConstructor
@@ -47,5 +50,15 @@ public class PostgresConfiguration extends AbstractR2dbcConfiguration {
 			builder.validationQuery(pool.getValidationQuery());
 		}
 		return new ConnectionPool(builder.build());
+	}
+
+	@Bean
+	public DatabaseClient databaseClient(ConnectionFactory connectionFactory) {
+		return DatabaseClient.create(connectionFactory);
+	}
+
+	@Bean
+	public CryptocoinCustomRepository cryptocoinCustomRepository(DatabaseClient databaseClient) {
+		return new CryptocoinCustomRepositoryImpl(databaseClient);
 	}
 }

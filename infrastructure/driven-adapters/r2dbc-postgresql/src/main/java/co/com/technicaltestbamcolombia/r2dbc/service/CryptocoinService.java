@@ -7,6 +7,7 @@ import co.com.technicaltestbamcolombia.model.config.CryptoException;
 import co.com.technicaltestbamcolombia.model.user.UserCryptocoinDTO;
 import co.com.technicaltestbamcolombia.r2dbc.mapper.MapperEntity;
 import co.com.technicaltestbamcolombia.r2dbc.repository.CryptocoinCustomRepository;
+import co.com.technicaltestbamcolombia.r2dbc.repository.CryptocoinCustomRepositoryImpl;
 import co.com.technicaltestbamcolombia.r2dbc.repository.UserCryptocoinRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;

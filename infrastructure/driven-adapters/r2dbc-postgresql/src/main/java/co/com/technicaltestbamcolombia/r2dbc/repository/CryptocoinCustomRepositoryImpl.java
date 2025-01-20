@@ -3,12 +3,10 @@ package co.com.technicaltestbamcolombia.r2dbc.repository;
 
 
 import co.com.technicaltestbamcolombia.model.Cryptocoin.CryptocoinDTO;
-import co.com.technicaltestbamcolombia.model.config.CryptoErrorCode;
-import co.com.technicaltestbamcolombia.model.config.CryptoException;
+
 import co.com.technicaltestbamcolombia.model.user.UserCryptocoinDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;

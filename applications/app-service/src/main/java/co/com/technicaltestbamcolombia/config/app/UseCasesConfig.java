@@ -6,6 +6,7 @@ import co.com.technicaltestbamcolombia.model.user.UserDTO;
 import co.com.technicaltestbamcolombia.model.user.gateways.UserGateway;
 import co.com.technicaltestbamcolombia.r2dbc.mapper.MapperEntity;
 import co.com.technicaltestbamcolombia.r2dbc.repository.CryptocoinCustomRepository;
+import co.com.technicaltestbamcolombia.r2dbc.repository.CryptocoinCustomRepositoryImpl;
 import co.com.technicaltestbamcolombia.r2dbc.repository.UserCryptocoinRepository;
 import co.com.technicaltestbamcolombia.r2dbc.repository.UserRepository;
 import co.com.technicaltestbamcolombia.r2dbc.service.CryptocoinService;
@@ -24,6 +25,7 @@ import reactor.core.publisher.Mono;
         },
         useDefaultFilters = false)
 public class UseCasesConfig {
+
 
         @Bean
         public CryptocoinUseCase cryptocoinUseCase(CryptocoinGateway cryptocoinGateway) {
@@ -47,5 +49,7 @@ public class UseCasesConfig {
                 return new CryptocoinService(cryptocoinCustomRepository, userCryptocoinRepository, mapperEntity
                 ,userService);
         }
+
+
 
 }
