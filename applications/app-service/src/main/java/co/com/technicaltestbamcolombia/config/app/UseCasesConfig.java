@@ -1,12 +1,9 @@
 package co.com.technicaltestbamcolombia.config.app;
 
-import co.com.technicaltestbamcolombia.api.service.ApiRestService;
 import co.com.technicaltestbamcolombia.model.Cryptocoin.gateways.CryptocoinGateway;
-import co.com.technicaltestbamcolombia.model.user.UserDTO;
 import co.com.technicaltestbamcolombia.model.user.gateways.UserGateway;
-import co.com.technicaltestbamcolombia.r2dbc.mapper.MapperEntity;
+import co.com.technicaltestbamcolombia.r2dbc.mapper.Mapper;
 import co.com.technicaltestbamcolombia.r2dbc.repository.CryptocoinCustomRepository;
-import co.com.technicaltestbamcolombia.r2dbc.repository.CryptocoinCustomRepositoryImpl;
 import co.com.technicaltestbamcolombia.r2dbc.repository.UserCryptocoinRepository;
 import co.com.technicaltestbamcolombia.r2dbc.repository.UserRepository;
 import co.com.technicaltestbamcolombia.r2dbc.service.CryptocoinService;
@@ -16,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
-import reactor.core.publisher.Mono;
 
 @Configuration
 @ComponentScan(basePackages = "co.com.technicaltestbamcolombia.usecase",
@@ -44,9 +40,9 @@ public class UseCasesConfig {
         @Bean
         public CryptocoinGateway cryptocoinGateway(CryptocoinCustomRepository cryptocoinCustomRepository,
                                                    UserCryptocoinRepository userCryptocoinRepository,
-                                                   MapperEntity mapperEntity,
+                                                   Mapper mapper,
                                                    UserService userService) {
-                return new CryptocoinService(cryptocoinCustomRepository, userCryptocoinRepository, mapperEntity
+                return new CryptocoinService(cryptocoinCustomRepository, userCryptocoinRepository, mapper
                 ,userService);
         }
 

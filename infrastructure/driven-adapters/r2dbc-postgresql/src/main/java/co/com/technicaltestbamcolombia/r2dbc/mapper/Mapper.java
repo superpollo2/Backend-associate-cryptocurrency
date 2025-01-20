@@ -5,7 +5,7 @@ import co.com.technicaltestbamcolombia.r2dbc.entity.UserCryptocoinEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MapperEntity {
+public class Mapper {
 
     public UserCryptocoinEntity toEntity(UserCryptocoinDTO userCryptocoinDTO) {
         return UserCryptocoinEntity.builder()
