@@ -1,6 +1,6 @@
 package co.com.technicaltestbamcolombia.usecase.providers;
 
-import co.com.technicaltestbamcolombia.model.Cryptocoin.CryptocoinDTO;
+import co.com.technicaltestbamcolombia.model.Cryptocoin.CryptocoinUserAmountDTO;
 import co.com.technicaltestbamcolombia.model.user.UserCryptocoinDTO;
 
 import java.util.ArrayList;
@@ -8,8 +8,8 @@ import java.util.List;
 
 public class TestBuilders {
 
-    public static CryptocoinDTO getCryptocoinDTOOne() {
-        return CryptocoinDTO.builder()
+    public static CryptocoinUserAmountDTO getCryptocoinDTOOne() {
+        return CryptocoinUserAmountDTO.builder()
                 .cryptocoinId(1)
                 .cryptocoinName("Bitcoin")
                 .symbol("BTC")
@@ -17,8 +17,8 @@ public class TestBuilders {
                 .build();
     }
 
-    public static CryptocoinDTO getCryptocoinDTOTwo() {
-        return CryptocoinDTO.builder()
+    public static CryptocoinUserAmountDTO getCryptocoinDTOTwo() {
+        return CryptocoinUserAmountDTO.builder()
                 .cryptocoinId(2)
                 .cryptocoinName("Ethereum")
                 .symbol("ETH")
@@ -26,8 +26,8 @@ public class TestBuilders {
                 .build();
     }
 
-    public static List<CryptocoinDTO> getCryptocoinDTOList() {
-        List<CryptocoinDTO> list = new ArrayList<CryptocoinDTO>();
+    public static List<CryptocoinUserAmountDTO> getCryptocoinDTOList() {
+        List<CryptocoinUserAmountDTO> list = new ArrayList<CryptocoinUserAmountDTO>();
         list.add(getCryptocoinDTOOne());
         list.add(getCryptocoinDTOTwo());
         return list;

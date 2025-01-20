@@ -3,9 +3,11 @@ package co.com.technicaltestbamcolombia.config.app;
 import co.com.technicaltestbamcolombia.model.Cryptocoin.gateways.CryptocoinGateway;
 import co.com.technicaltestbamcolombia.model.user.gateways.UserGateway;
 import co.com.technicaltestbamcolombia.r2dbc.mapper.Mapper;
+import co.com.technicaltestbamcolombia.r2dbc.repository.CountryRepository;
 import co.com.technicaltestbamcolombia.r2dbc.repository.CryptocoinCustomRepository;
 import co.com.technicaltestbamcolombia.r2dbc.repository.UserCryptocoinRepository;
 import co.com.technicaltestbamcolombia.r2dbc.repository.UserRepository;
+import co.com.technicaltestbamcolombia.r2dbc.service.CountryService;
 import co.com.technicaltestbamcolombia.r2dbc.service.CryptocoinService;
 import co.com.technicaltestbamcolombia.r2dbc.service.UserService;
 import co.com.technicaltestbamcolombia.usecase.CryptocoinUseCase;
@@ -33,6 +35,12 @@ public class UseCasesConfig {
         public UserService userService(UserRepository userRepository) {
                 return new UserService(userRepository);
         }
+
+        @Bean
+        public CountryService countryService(CountryRepository countryRepository, Mapper mapper) {
+                return new CountryService(countryRepository, mapper);
+        }
+
         @Bean
         public UserGateway userGateway(UserRepository userRepository) {
                 return new UserService(userRepository);
@@ -41,9 +49,10 @@ public class UseCasesConfig {
         public CryptocoinGateway cryptocoinGateway(CryptocoinCustomRepository cryptocoinCustomRepository,
                                                    UserCryptocoinRepository userCryptocoinRepository,
                                                    Mapper mapper,
-                                                   UserService userService) {
+                                                   UserService userService,
+                                                   CountryService countryService) {
                 return new CryptocoinService(cryptocoinCustomRepository, userCryptocoinRepository, mapper
-                ,userService);
+                ,userService, countryService);
         }
 
 

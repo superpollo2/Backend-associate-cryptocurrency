@@ -1,0 +1,25 @@
+package co.com.technicaltestbamcolombia.config.app;
+
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
+
+@Configuration
+public class CorsConfig {
+    @Bean
+    public CorsWebFilter corsWebFilter() {
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.addAllowedOrigin("http://localhost:4200"); // Cambia según el dominio de tu frontend
+        corsConfig.addAllowedMethod("*"); // Permite todos los métodos HTTP
+        corsConfig.addAllowedHeader("*"); // Permite todos los headers
+        corsConfig.setAllowCredentials(true); // Habilita el uso de credenciales (opcional)
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig); // Aplica la configuración a todas las rutas
+
+        return new CorsWebFilter(source);
+    }
+}
